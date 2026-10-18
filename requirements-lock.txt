@@ -1,0 +1,5 @@
+# PLACEHOLDER - regenerate from a known-good environment, then commit:
+#   conda activate marl
+#   pip freeze > requirements-lock.txt
+# (Remove the line for this project itself, "-e git+..." or "marl-soccer", if it appears.)
+# environment.yml is the default way to set up; this file is the exact-version fallback.

@@ -1,0 +1,26 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+
+# Environments
+venv/
+.venv/
+.conda/
+
+# Experiment artifacts (share via Drive / Git LFS, not Git)
+checkpoints/*
+!checkpoints/README.md
+!checkpoints/.gitkeep
+wandb/
+runs/
+*.zip
+*.pt
+*.pth
+
+# Editors / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

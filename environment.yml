@@ -1,0 +1,21 @@
+# Source of truth for setup. Create with:
+#   conda env create -f environment.yml
+#   conda activate marl
+# Update later with:
+#   conda env update -f environment.yml --prune
+name: marl
+channels:
+  - defaults
+dependencies:
+  - python=3.10
+  - pip
+  - pip:
+      - mpe2
+      - pettingzoo
+      - gymnasium
+      - stable-baselines3[extra]
+      - supersuit
+      - torch
+      - wandb
+      - pytest
+      - -e .
