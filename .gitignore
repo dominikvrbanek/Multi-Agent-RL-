@@ -3,11 +3,13 @@ __pycache__/
 *.py[cod]
 *.egg-info/
 .pytest_cache/
+.mypy_cache/
 
 # Environments
 venv/
 .venv/
 .conda/
+pettingzoo-env/
 
 # Experiment artifacts (share via Drive / Git LFS, not Git)
 checkpoints/*
@@ -20,7 +22,16 @@ runs/
 *.pth
 
 # Editors / OS
+.env
 .vscode/
 .idea/
 .DS_Store
 Thumbs.db
+
+
+# Training outputs
+logs/
+tensorboard/
+
+# Generated plots and videos
+outputs/
