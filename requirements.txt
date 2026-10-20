@@ -1,1 +1,5 @@
+# PettingZoo and dependencies for the SISL environment family
+pettingzoo[sisl]
 
+# Automated tests
+pytest
