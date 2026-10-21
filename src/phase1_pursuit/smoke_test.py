@@ -2,6 +2,8 @@
 
     python -m phase1_pursuit.smoke_test            # headless
     python -m phase1_pursuit.smoke_test --render   # opens a window so you can watch
+
+    The smoke test runs 500 steps with random actions.
 """
 import argparse
 
