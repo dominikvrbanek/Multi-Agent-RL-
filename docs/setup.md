@@ -1,58 +1,88 @@
 # Setup Guide
 
-Requirements: **Git** and **Conda (Miniconda)**, or Python 3.10/3.11 if you prefer venv.
-Nothing here needs a GPU.
+Target: **Python 3.12** and PettingZoo's `sisl/pursuit-v5` environment. PettingZoo does not
+officially support native Windows; if installation fails there, use WSL2 (see the end).
 
-## Option A: Conda (default)
+## 1. Clone
 
-**Windows:** open *Anaconda Prompt* (Start menu). **macOS/Linux:** any terminal.
+```
+git clone <REPO_URL>
+cd Multi-Agent-RL-
+```
 
-```bash
-git clone <REPO-URL>
-cd uais-marl-soccer
-conda env create -f environment.yml
+## 2. Create an environment (pick ONE)
+
+### Option A: venv (default)
+
+macOS / Linux:
+
+```
+python3.12 -m venv .venv
+source .venv/bin/activate
+```
+
+Windows (PowerShell):
+
+```
+py -3.12 -m venv .venv
+.\.venv\Scripts\Activate.ps1
+```
+
+If PowerShell blocks activation, use Command Prompt and run `.venv\Scripts\activate.bat`.
+
+### Option B: conda (alternative)
+
+Use Anaconda Prompt (Windows) or your normal terminal (macOS/Linux):
+
+```
+conda create -n marl python=3.12 -y
 conda activate marl
-python scripts/smoke_test.py
 ```
 
-The first environment solve can take a minute or two. The `torch` download is large, so use decent wifi.
+Install packages with pip (next step), not `conda install`, so there is one source of truth.
 
-## Option B: venv (no conda)
+## 3. Install
 
-**Windows (PowerShell):**
-```powershell
-python -m venv venv
-Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass   # only if activation is blocked
-.\venv\Scripts\Activate.ps1
 ```
-
-**macOS / Linux:**
-```bash
-python3 -m venv venv
-source venv/bin/activate
-```
-
-Then, on any OS:
-```bash
 python -m pip install --upgrade pip
-pip install mpe2 pettingzoo gymnasium "stable-baselines3[extra]" supersuit torch wandb pytest
-pip install -e .
-python scripts/smoke_test.py
+python -m pip install -r requirements.txt
 ```
 
-## Verify
+This installs PettingZoo with the SISL extras, pytest, and this project's own code
+(`phase1_pursuit`, `phase2_unity_soccer`) in editable mode.
 
-```bash
-python scripts/smoke_test.py            # headless check
-python scripts/smoke_test.py --render   # opens a window; you should see agents moving
-python scripts/random_baseline.py       # prints the random-action reward baseline
-pytest                                  # runs the tests
+## 4. Verify
+
+```
+python -m phase1_pursuit.smoke_test
+python -m pytest -q
 ```
 
-## Notes
+Expected: `SUCCESS: Pursuit environment is working.` and all tests passing.
+Post the smoke-test output in Discord. Add `--render` to watch a window.
 
-- The Phase 1 environment is **`simple_tag_v3`** (predator-prey) from the **`mpe2`** package. Import from `mpe2`, not `pettingzoo.mpe`, which is deprecated.
-- In VS Code, select the interpreter (Ctrl+Shift+P, "Python: Select Interpreter", `marl`).
-- If `conda` isn't recognized in PowerShell, run `conda init powershell` once in Anaconda Prompt and restart the terminal.
-- Still stuck on Windows? WSL2 gives you a Linux environment and sidesteps most issues.
-- Use one approach (conda **or** venv), not both.
+## Troubleshooting
+
+| Problem | Fix |
+| --- | --- |
+| `No module named phase1_pursuit` | Environment not active, or step 3 not run. Re-run step 3. |
+| `No module named pettingzoo` | Activate your environment, then re-run step 3. |
+| `Environment version ... not found` | Use `sisl/pursuit-v5`; the version lives in `src/phase1_pursuit/env.py`. |
+| `python` not recognized (Windows) | Use `py -3.12`. |
+| `conda` not recognized | Use Anaconda/Miniforge Prompt, or run `conda init` and reopen the terminal. |
+| Rendering fails | Test headless first; rendering needs platform graphics support. |
+
+## Windows: WSL2 fallback
+
+```
+wsl --install
+```
+
+Restart, open Ubuntu, then:
+
+```
+sudo apt update
+sudo apt install -y python3 python3-venv python3-pip
+```
+
+Clone the repo inside the Linux filesystem and repeat the steps above.

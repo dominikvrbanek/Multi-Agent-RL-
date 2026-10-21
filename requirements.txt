@@ -1,5 +1,10 @@
-# PettingZoo and dependencies for the SISL environment family
+# Phase 1 (Pursuit). The [sisl] extra is required for the Pursuit environment.
 pettingzoo[sisl]
 
-# Automated tests
+# Tests
 pytest
+
+# This project's own code (src/phase1_pursuit, src/phase2_unity_soccer), editable install
+-e .
+
+# Phase 2 (SoccerTwos) dependencies are added in Month 3, not needed for Phase 1.
